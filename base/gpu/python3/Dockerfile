@@ -41,5 +41,5 @@ RUN wget https://www.python.org/ftp/python/3.7.6/Python-3.7.6.tgz \
     && make altinstall \
     && python3 --version
 
-# Check verion: docker container run --gpus all base-open-cv nvidia-smi
-CMD nvidia-smi && python3 --version
+# Check verion: docker container run --gpus all base-gpu-python3
+CMD python3 --version

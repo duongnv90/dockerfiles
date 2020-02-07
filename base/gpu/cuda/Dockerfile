@@ -9,5 +9,5 @@
 # https://gitlab.com/nvidia/container-toolkit/nvidia-docker/-/tree/master
 FROM nvidia/cuda:10.2-base-ubuntu18.04
 
-# Check verion: docker container run --gpus all base-open-cv nvidia-smi
+# Check verion: docker container run --gpus all base-cuda nvidia-smi
 CMD nvidia-smi
