@@ -1,5 +1,5 @@
 # Open CV Base base-cuda
-# Build: docker image build --rm -t base-cuda .
+# Build: docker image build --rm -t base-cuda:10.2 .
 #
 # Includes
 # - Ubuntu 18.04
