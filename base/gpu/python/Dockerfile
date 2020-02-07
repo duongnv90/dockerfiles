@@ -1,4 +1,4 @@
-# Open CV Base base-cuda
+# Python Base
 # Build: docker image build --rm -t base-cuda-python:3.7.6 .
 #
 # Includes

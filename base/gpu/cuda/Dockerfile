@@ -1,4 +1,4 @@
-# Open CV Base base-cuda
+# Cuda Base
 # Build: docker image build --rm -t base-cuda:10.2 .
 #
 # Includes
