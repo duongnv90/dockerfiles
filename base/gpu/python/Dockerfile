@@ -14,17 +14,16 @@ SHELL ["/bin/bash", "-c"]
 # http://bugs.python.org/issue19846
 # > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK.
 ENV LANG C.UTF-8
+ENV DEBIAN_FRONTEND=noninteractive 
 
 # Install prerequisites package
-RUN apt-get update \
+RUN apt-get update && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
           software-properties-common \
-          gcc \
-          make \
-          zlib1g-dev \
-          libffi-dev \
-          wget \
-          tar 
+          build-essential gcc make wget tar tzdata unzip \
+          zlib1g-dev libffi-dev \
+          libssl-dev libncurses5-dev libsqlite3-dev libreadline-dev libtk8.5 \
+          libgdm-dev libdb4o-cil-dev libpcap-dev
 
 # Download source & Build & Install Python 3.7.6
 RUN mkdir /temp \
@@ -38,18 +37,20 @@ RUN mkdir /temp \
     && rm -rf /temp
 
 # Install PIP and dependencers
-RUN apt-get install -y build-essential libssl-dev libffi-dev python-dev python3-pip python3-venv
+RUN apt-get install -y python-dev python3-dev python3-pip python3-venv \
+    && apt-get clean \
+    && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 # Confirm version
-RUN python3 --version && pip3 --version
+RUN pip3 install --upgrade pip && python3 --version && pip3 --version
 
 # Create base virtual environments
 RUN rm -rf  /base && python3 -m venv base \
     && source /base/bin/activate \
-    && python --version
+    && python --version && pip install --upgrade pip && pip install numpy
 
 # Auto activate base for bash
-RUN echo -e "\n # Auto activate base \n source /base/bin/activate " >> ~/.bashrc
+RUN echo -e "\n # Auto activate base \nexport WORKON_HOME=/base\nexport VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3\nsource /base/bin/activate\n" >> ~/.bashrc
 
 # Check verion: docker container run --gpus all base-cuda-python3
 CMD python --version && pip --version
